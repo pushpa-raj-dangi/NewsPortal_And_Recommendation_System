@@ -1,0 +1,546 @@
+﻿@model NewsWebApp.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Mero News Provide";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    @{
+        int i = 0;
+    }
+    <div class="row">
+        @foreach (var news in Model.FeatureNews)
+        {
+            i++;
+
+            @if (i == 1)
+            {
+                <div class="col-md-7" id="firstrow">
+
+                    <div class="square-img overlay">
+                        @if (news.Picture != null)
+                        {
+                            <img src="~/uploads/@news.Picture" alt="@news.Name" />
+                        }
+                        else
+                        {
+                            <img src="~/uploads/default.jpg" alt="@news.Name" />
+                        }
+                        <div class="content">
+                            <br />
+                            <a href="/posts/news/@news.Slug">
+                                @news.Name
+                            </a>
+
+
+
+                            <div class="time">
+                                @if (@news.AppUser?.ProfileImg != null)
+                                {
+                                    <a href="/posts/postbyauthor/@news.AppUserId">
+                                        <div class="d-flex">
+                                            <img src="~/uploads/@news.AppUser.ProfileImg" class="rounded-circle" style="width:40px;object-fit:cover;height:40px">
+                                            <div class="d-flex ml-3 flex-column font-weight-normal">
+
+                                                @{
+                                                    var index = news.AppUser.UserName.IndexOf('@');
+                                                }
+                                                @news.AppUser.UserName.Substring(0, index)
+                                                <div class="font-style-italic">
+
+                                                    <i class="clock" style="filter:invert(1)"></i>  <span>@news.CreatedDate.ToString("dddd, dd MMMM yyyy")</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            else
+            {
+                if (i == 2)
+                {
+                    <div class="wrap-5" />
+                }
+                <div class="small-square overlay mb-4">
+                    @if (news.Picture != null)
+                    {
+                        <img src="~/uploads/@news.Picture" alt="@news.Name" />
+                    }
+                    else
+                    {
+                        <img src="/uploads/five.jpg" />
+                    }
+                    <div class="content">
+                        <br />
+                        <h6>
+                            <a href="/posts/news/@news.Slug">
+                                @news.Name
+                            </a>
+                        </h6>
+                        <div class="time">
+                            @if (@news.AppUser?.ProfileImg != null)
+                            {
+                                <a href="/posts/postbyauthor/@news.AppUserId">
+                                    <div class="d-flex">
+                                        <img src="~/uploads/@news.AppUser.ProfileImg" class="rounded-circle" style="width:40px;object-fit:cover;height:40px">
+                                        <div class="d-flex ml-3 flex-column font-weight-normal">
+
+                                            @{
+                                                var index = news.AppUser.UserName.IndexOf('@');
+                                            }
+                                            @news.AppUser.UserName.Substring(0, index)
+
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }   }
+    </div>
+    @Html.Raw("</div>")
+    <div class="row my-5" id="wrap">
+        <div class="col-md-12"> <div class="cat-title">Politics</div></div>
+        <div class="col-md-8">
+            @{
+                int j = 0;
+            }
+            @foreach (var news in Model.PoliticsNews)
+            {
+                j++;
+
+                @if (j == 1)
+                {
+                    <div class="square-img overlay">
+                        @if (news.Picture != null)
+                        {
+                            <img src="~/uploads/@news.Picture" style="height:400px;width:100%" alt="@news.Name" />
+                        }
+                        else
+                        {
+                            <img class="mr-3" src="~/uploads/default.jpg" style="height:400px;width:100%" alt="@news.Name">
+                        }
+                        <div class="content">
+                            @*<div class="category">
+                                <span>
+                                @news.PostCategories.FirstOrDefault().Category.Name
+                                </span>
+                                </div>*@
+
+                            <a href="/posts/news/@news.Slug">
+                                @news.Name
+                            </a>
+                            <div class="time">
+                                @if (@news.AppUser?.ProfileImg != null)
+                                {
+                                    <a href="/posts/postbyauthor/@news.AppUserId">
+                                        <div class="d-flex">
+                                            <img src="~/uploads/@news.AppUser.ProfileImg" class="rounded-circle" style="width:40px;object-fit:cover;height:40px">
+                                            <div class="d-flex ml-3 flex-column font-weight-normal">
+
+                                                @{
+                                                    var index = news.AppUser.UserName.IndexOf('@');
+                                                }
+                                                @news.AppUser.UserName.Substring(0, index)
+                                                <div class="font-style-italic">
+
+                                                    <i class="clock"></i>  <span>@news.CreatedDate.ToString("dddd, dd MMMM yyyy")</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @if (j == 2)
+                    {
+                        <div class="row mt-4" />
+                    }
+
+                    <div class="col-md-4">
+                        <a class="text-dark" href="/posts/news/@news.Slug">
+                            <div class="card shadow-sm h-100 border-0">
+                                @if (news.Picture != null)
+                                {
+                                    <img src="~/uploads/@news.Picture" alt="@news.Name" />
+                                }
+                                else
+                                {
+                                    <img src="/uploads/five.jpg" />
+                                }
+                                <div class="card-body p-2">
+                                    <h6 class="card-title">
+                                        @news.Name
+                                    </h6>
+                                    <div class="time text-dark">
+                                        <i class="clock"></i>  <span>@news.CreatedDate.ToString("dddd, dd MMMM yyyy")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    @if (j == 5)
+                    {
+                        <div class="row mt-4" />
+                    }   }          }
+        </div>
+
+    </div>
+
+    <div class="col-md-4 latest">
+        <div class="cat-title">Latest Update</div>
+        <ul class="list-unstyled" style="padding: 10px;
+    background: #f9f9f9;
+    box-shadow: 0px 1px 4px #4e46462e;">
+            @foreach (var post in Model.LatestUpdate)
+            {
+                <li class="media">
+                    <a href="/posts/news/@post.Slug" class="text-dark d-flex">
+                        @if (post.Picture != null)
+                        {
+                            <img class="mr-3" src="~/uploads/@post.Picture" alt="@post.Name">
+                        }
+                        else
+                        {
+                            <img class="mr-3" src="~/uploads/default.jpg" alt="@post.Name">
+                        }
+                    </a>
+
+                    <div class="media-body">
+                        <h6 class="mt-0 mb-1">
+                            <a href="/posts/news/@post.Slug">
+                            @post.Name
+                            </a>
+                            @*@{post.Name.Length < 0 ? post.Name : post.Name.Substring(0, 10);}*@
+                        </h6>
+                        <div class="time">
+                            @if (@post.AppUser?.ProfileImg != null)
+                            {
+                                <a href="/posts/postbyauthor/@post.AppUserId">
+                                    <div class="d-flex">
+                                        <div class="d-flex flex-column font-weight-normal">
+
+                                            @{
+                                                var index = post.AppUser.UserName.IndexOf('@');
+                                            }
+                                            @post.AppUser.UserName.Substring(0, index)
+
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+
+                </li>
+            }
+
+
+
+        </ul>
+    </div>
+    @Html.Raw("</div>")
+
+    <div class="row business my-5">
+        <div class="col-md-12">
+            <div class="cat-title">BUSINESS</div>
+        </div>
+        @foreach (var post in Model.BusinessNews)
+        {
+            <div class="col-md-3">
+                <div class="card border h-100" style="background:#f9f9f9">
+                    <a href="/posts/news/@post.Slug">
+                        @if (post.Picture != null)
+                        {
+                            <img class="card-img-top" src="~/uploads/@post.Picture" alt="Card image cap">
+                        }
+                        else
+                        {
+
+                            <img class="card-img-top" src="~/uploads/default.jpg" alt="Card image cap">
+                        }
+                    </a>
+
+                    <div class="card-body p-2">
+                        <h6 class="card-title">
+                            <a href="/posts/news/@post.Slug">
+                            @post.Name
+                            </a>
+                        </h6>
+                        <div class="time">
+                            @if (@post.AppUser?.ProfileImg != null)
+                            {
+                                <a href="/posts/postbyauthor/@post.AppUserId">
+                                    <div class="d-flex">
+                                        <img src="~/uploads/@post.AppUser.ProfileImg" class="rounded-circle" style="width:40px;object-fit:cover;height:40px">
+                                        <div class="d-flex ml-3 flex-column font-weight-normal">
+
+                                            @{
+                                                var index = post.AppUser.UserName.IndexOf('@');
+                                            }
+                                            @post.AppUser.UserName.Substring(0, index)
+                                            <div class="font-style-italic">
+
+                                                <i class="clock"></i>  @post.CreatedDate.ToString("dddd, dd MMMM yyyy")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="feature-news">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-12">
+                <div class="cat-title">Feature News</div>
+            </div>
+            @foreach (var post in Model.FeatureNews)
+            {
+                <div class="col-md-4">
+                    <div class="square-img overlay">
+                        <a class="text-light" href="/posts/news/@post.Slug">
+                            @if (post.Picture != null)
+                            {
+
+                                <img src="~/uploads/@post.Picture" style="height:450px;width:100%;border-radius:5px" alt="@post.Name" />
+                            }
+                            else
+                            {
+                                <img style="height:450px;width:100%;border-radius:5px" src="~/uploads/default.jpg" alt="@post.Name">
+                            }
+                        </a>
+
+                        <div class="content p-3" style="border-radius:5px">
+                            @*<div class="category">
+                                <span>
+                                @post.PostCategories.FirstOrDefault().Category.Name
+                                </span>
+                                </div>*@
+
+                            <h5>
+                                <a class="text-light" href="/posts/news/@post.Slug">
+
+                                @post.Name
+                                </a>
+
+                            </h5>
+
+                            <div class="time">
+                                @if (@post.AppUser?.ProfileImg != null)
+                                {
+                                    <a href="/posts/postbyauthor/@post.AppUserId">
+                                        <div class="d-flex">
+                                            <img src="~/uploads/@post.AppUser.ProfileImg" class="rounded-circle" style="width:40px;object-fit:cover;height:40px">
+                                            <div class="d-flex ml-3 flex-column font-weight-normal">
+
+                                                @{
+                                                    var index = post.AppUser.UserName.IndexOf('@');
+                                                }
+                                                @post.AppUser.UserName.Substring(0, index)
+                                                <div class="font-style-italic">
+
+                                                    <i class="clock"></i>  @post.CreatedDate.ToString("dddd, dd MMMM yyyy")
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="container tech my-5">
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="cat-title">
+                Science & Technologoy
+            </div>
+            <ul class="list-unstyled">
+                @foreach (var post in Model.TechnologyNews)
+                {
+                    <li class="media">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @if (post.Picture != null)
+                                {
+
+                                    <img class="mr-3" src="~/uploads/@post.Picture" alt="Generic placeholder image">
+                                }
+                                else
+                                {
+                                    <img class="mr-3" src="~/uploads/default.jpg" alt="Generic placeholder image">
+                                }
+                            </div>
+                            <div class="media-body col-md-8">
+                                <a href="/posts/news/@post.Slug">
+                                    <h5 class="mt-0 mb-1">
+                                        @post.Name
+                                    </h5>
+                                </a>
+                                <div class="time">
+                                    @if (@post.AppUser?.ProfileImg != null)
+                                    {
+                                        <a href="/posts/postbyauthor/@post.AppUserId">
+                                            <div class="d-flex">
+                                                <img src="~/uploads/@post.AppUser.ProfileImg" class="rounded-circle" style="width:40px;object-fit:cover;height:40px">
+                                                <div class="d-flex ml-3 flex-column font-weight-normal">
+
+                                                    @{
+                                                        var index = post.AppUser.UserName.IndexOf('@');
+                                                    }
+                                                    @post.AppUser.UserName.Substring(0, index)
+                                                    <div class="font-style-italic">
+
+                                                        <i class="clock"></i>  @post.CreatedDate.ToString("dddd, dd MMMM yyyy")
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                }
+
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <div class="cat-title">Sports</div>
+            @foreach (var post in Model.SportsNews)
+            {
+                <div class="card border-0 mb-3">
+                    <a href="/posts/news/@post.Slug">
+                        @if (post.Picture != null)
+                        {
+
+                            <img class="card-img-top" src="~/uploads/@post.Picture" alt="Card image cap">
+                        }
+                        else
+                        {
+                            <img src="~/uploads/default.jpg" class="card-img-top" alt="Alternate Text" />
+                        }
+                    </a>
+
+                    <div class="card-body p-0 mt-3">
+                        <h6 class="card-title">
+                            <a href="/posts/news/@post.Slug">
+                            @post.Name
+                            </a>
+                        </h6>
+                        <div class="time">
+                            @if (@post.AppUser?.ProfileImg != null)
+                            {
+                                <a href="/posts/postbyauthor/@post.AppUserId">
+                                    <div class="d-flex">
+                                        <img src="~/uploads/@post.AppUser.ProfileImg" class="rounded-circle" style="width:40px;object-fit:cover;height:40px">
+                                        <div class="d-flex ml-3 flex-column font-weight-normal">
+
+                                            @{
+                                                var index = post.AppUser.UserName.IndexOf('@');
+                                            }
+                                            @post.AppUser.UserName.Substring(0, index)
+                                            <div class="font-style-italic">
+
+                                                <i class="clock"></i>  @post.CreatedDate.ToString("dddd, dd MMMM yyyy")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<div class="entertainment container-fluid" style="background:rgba(0,0,0,.88);
+    padding: 50px 0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="cat-title">Entertainment</div>
+            </div>
+            @foreach (var post in Model.EntertainmentNews)
+            {
+                <div class="col-md-4">
+                    <div class="square-img overlay">
+                        <a href="/posts/news/@post.Slug">
+                            @if (post.Picture != null)
+                            {
+                                <img src="~/uploads/@post.Picture" style="height:450px;width:100%;border-radius:5px" alt="Alternate Text" />
+                            }
+                            else
+                            {
+                                <img src="~/uploads/default.jpg" style="height:450px;width:100%;border-radius:5px" alt="Alternate Text" />
+                            }
+                        </a>
+
+                        <div class="content p-3" style="border-radius:5px">
+                            <div class="category">
+                                <span>
+                                    Entertainment
+                                </span>
+                            </div>
+
+                           <a href="/posts/news/@post.Slug">
+                            <h5 class="text-light">
+                                @post.Name
+                            </h5>
+                            </a>
+                            <div class="time">
+                                @if (@post.AppUser?.ProfileImg != null)
+                                {
+                                    <a href="/posts/postbyauthor/@post.AppUserId">
+                                        <div class="d-flex">
+                                            <img src="~/uploads/@post.AppUser.ProfileImg" class="rounded-circle" style="width:40px;object-fit:cover;height:40px">
+                                            <div class="d-flex ml-3 flex-column font-weight-normal">
+
+                                                @{
+                                                    var index = post.AppUser.UserName.IndexOf('@');
+                                                }
+                                                @post.AppUser.UserName.Substring(0, index)
+                                                <div class="font-style-italic">
+
+                                                    <i class="clock"></i>  @post.CreatedDate.ToString("dddd, dd MMMM yyyy")
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

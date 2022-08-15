@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python with Django</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light ">
+        <div class="container">
+            <a class="navbar-brand text" href="/">MeroMovies</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="movie">Movies</a>
+                    <a class="nav-link active" href="#">About</a>
+                    <a class="nav-link active">Contact</a>
+                </div>
+
+            </div>
+            <div class="btns">
+
+                {% if request.user.is_authenticated%}
+                Welcome 😊 {{ request.user.username}}
+                <a href="{% url 'logout' %}" class="btn btn-danger">logout</a>
+
+                {% else %}
+                <a href="/signin" class="btn btn-primary mx-2">SignIn</a>
+                <a href="/signup" class="btn btn-success">SignUp</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% block content %} {% endblock %}
+
+    <!-- <script type="text/javascript" src="{% static 'bootstrap/js/jquery.min.js'%}"></script> -->
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+</body>
+
+</html>

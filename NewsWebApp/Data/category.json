@@ -1,0 +1,62 @@
+[
+  {
+    "Id": 19,
+    "Name": "Breaking News"
+  },
+  {
+    "Id": 13,
+    "Name": "News"
+  },
+  {
+    "Id": 20,
+    "Name": "Politics"
+  },
+  {
+    "Id": 9,
+    "Name": "Opinion"
+  },
+  {
+    "Id": 149,
+    "Name": "Feature"
+  },
+  {
+    "Id": 16,
+    "Name": "Lifestyle"
+  },
+  {
+    "Id": 14,
+    "Name": "Literature"
+  },
+  {
+    "Id": 4,
+    "Name": "Business"
+  },
+  {
+    "Id": 2,
+    "Name": "International"
+  },
+  {
+    "Id": 5,
+    "Name": "Sports"
+  },
+  {
+    "Id": 10,
+    "Name": "Entertainment"
+  },
+  {
+    "Id": 49,
+    "Name": "Travel"
+  },
+  {
+    "Id": 41,
+    "Name": "Health"
+  },
+  {
+    "Id": 15,
+    "Name": "Science/Technology"
+  },
+  {
+    "Id": 32,
+    "Name": "Religion"
+  }
+]

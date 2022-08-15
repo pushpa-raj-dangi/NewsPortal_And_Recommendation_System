@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block content%}
+<div class="container my-3">
+  <div class="bg-light p-4 rounded-3">
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Movie Title</th>
+          <th scope="col">Movie Budget</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for movie in movies %}
+        <tr>
+          <td>{{movie.id}}</td>
+          <td class="col-3">{{movie.title}}</td>
+          <td class="col-3">{{movie.budget}}</td>
+          <td class="col-4">
+            <a href="/movie_detail/{{movie.id}}">Go to details</a>
+            {% if request.user.is_superuser %}
+            <a href="/movie/{{movie.id}}/update" class="mx-3">Update</a>
+            <a href="/movie/{{movie.id}}/delete">Delete</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if pagination.current_page > 1 %}
+  <a href="/movie_list/page/{{pagination.previous_page}}">
+    Previous
+  </a>
+  {% endif %}
+
+  {% if pagination.current_page != pagination.past_page %}
+  <a href="/movie_list/page/{{pagination.next_page}}">
+    Next Page
+  </a>
+  {% endif %}
+
+</div>
+<div class="text-center">
+  <a class="btn btn-primary" href="/movie_list/page/1/">Load More...</a>
+
+</div>
+
+{% endblock %}

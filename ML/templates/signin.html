@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content%}
+<div class="container d-flex justify-content-center my-5 signin">
+    <form action="/signin/" method="post" class="form p-5">
+        <div class="mt-2 mb-3 signinhere">
+            <h3>Sign In Here</h3>
+        </div>
+        <!-- <div class="my-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" placeholder="Enter Username" class="form-control">
+            </div>
+            <div class="my-2">
+                <label for="username" class="form-label">Password</label>
+                <input type="password" name="password" placeholder="Enter Password" class="form-control">
+            </div>
+            <div class="d-flex justify-content-center">
+            <button class="btn btn-success my-2" type="submit">SignIn</button>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+                <a href="/signup">Don't have account ? Register Now</a>
+            </div> -->
+
+        {% csrf_token %}
+        {{ form.as_p }}
+      
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-secondary my-2" type="submit">SignIn</button>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+            <a href="/signup">Don't have account ? Register Now</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

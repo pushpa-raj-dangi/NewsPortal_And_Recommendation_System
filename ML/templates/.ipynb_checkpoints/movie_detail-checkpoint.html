@@ -1,0 +1,67 @@
+{% extends 'base.html' %}{% block content%}
+
+<div class="container details my-5">
+  <div class="row ">
+    <div class="col-md-5 card p-0">
+      <img src="{{movie.poster}}">
+    </div>
+    <div class="col-md-6 mt-4">
+      <div>
+        <h1 class="border  p-2 mb-3 rounded">{{movie.title}}</h1>
+      </div>
+      <div class="my-4">
+        <h5>Genre: {{ movie.genres }} </h5>
+      </div>
+      <div class="my-4">
+        <h5>Price: ${{ movie.budget }}</h5>
+      </div>
+
+      <div class="card p-3">
+        <h4>About {{movie.title}}</h4>
+        <hr>
+        {{movie.description}}
+      </div>
+      <div class="my-4">
+        {% if not context.is_favourite %}
+        <a href="/add_to_favorite/{{movie.id}}" style="font-size: 50px;">💓</a>
+        {% else %}
+        <a href="/remove_from_favorite/{{movie.id}}" style="font-size: 50px;">💟</a>
+        {% endif %}
+
+        <div class="card">
+          <h4 class="font-weight-bold py-3 px-2">
+            Trailer
+          </h4>
+          <iframe src="https: //www.youtube.com/embed/{{movie.trailer}}" title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+
+        <form class="mt-5" action="/movie_detail/{{movie.id}}" method="POST">
+          {% csrf_token %}
+          {{ review_form.as_p }}
+
+          <input class="btn mb-5 btn-primary" type="submit" value="Add reivew">
+        </form>
+
+        {% for review in reviews %}
+        <div class="card mt-4 py-3 px-3">
+          <div class="d-flex">
+            <div>
+              <img width="50px" style="border-radius:40%" src="https://via.placeholder.com/10" alt="">
+
+            </div>
+            <div class="mx-3">
+              {{review.user.user_name}}
+              ⏰ {{review.created_at}} <br>
+              {{review.review}}
+            </div>
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% block content%}
+<div>
+    {% for movie in movies %}
+    {{movie.id}}{{movie.title}}
+    <a href="/movie_detail/{{movie.id}}">Go to details</a>
+    {% endfor %}
+</div>
+{% endblock %}
