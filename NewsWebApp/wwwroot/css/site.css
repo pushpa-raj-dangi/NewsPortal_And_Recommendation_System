@@ -663,6 +663,9 @@ a.navbar-brand {
 div#progress-bar {
   z-index: 1111;
 }
+#postTable_wrapper {
+  width: 100%;
+}
 .btn-primary {
   color: #fff;
   background-color: #000;

@@ -47,7 +47,7 @@ def get_recommendation_for_movie(movie_id):
 
     i = 0
     movie_ids = []
-    for movie in sorted_similar_news:
+    for movie in sorted_similar_news[1:]:
         i = i+1
         movie_ids.append(get_id_from_index(df, movie[0]))
 

@@ -38,7 +38,16 @@ namespace NewsWebApp.Controllers.Api
 
         public IActionResult All()
         {
-            var posts = _context.Posts.OrderByDescending(x => x.CreatedDate).ProjectTo<PostDto>(_mapper.ConfigurationProvider).Where(x => x.PostStatus == PostStatus.Publish).ToList();
+            // var posts = _context.Posts.OrderByDescending(x => x.CreatedDate).ProjectTo<PostForRecommendDto>(_mapper.ConfigurationProvider).Where(x => x.PostStatus == PostStatus.Publish).ToList();
+            var posts = _context.Posts.Where(x => x.PostStatus == PostStatus.Publish).OrderByDescending(x => x.CreatedDate).Include(x => x.PostCategories)
+                .ThenInclude(x => x.Category).Include(x => x.PostTags).ThenInclude(x => x.Tag).Select(x => new
+                {
+                    id = x.Id,
+                    name = x.Name,
+                    content = x.Content,
+                    category = x.PostCategories.Select(k => k.Category.Name).FirstOrDefault(),
+                    Tag = x.PostTags.Select(k => k.Tag.Name).FirstOrDefault()
+                });
             return Ok(posts);
         }
 
@@ -52,18 +61,48 @@ namespace NewsWebApp.Controllers.Api
             return Ok(post);
         }
 
+        [HttpGet("news/search")]
+
+        public List<string> Search([FromQuery] string name)
+        {
+            var route = Request.Path.Value;
+
+            System.Console.WriteLine(route);
+            var posts = _context.Posts.Where(x => x.PostStatus == PostStatus.Publish).OrderByDescending(x => x.CreatedDate).Include(x => x.PostCategories)
+                 .ThenInclude(x => x.Category).Include(x => x.PostTags).ThenInclude(x => x.Tag).Select(x => x.Name).Take(10)
+                 .ToList();
+
+            return posts;
+        }
+
         [HttpGet("alnews")]
         public async Task<IActionResult> GetAllP([FromQuery] PaginationFilter filter)
         {
 
             var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize, filter.Search);
-            var pagedData = await _context.Posts.OrderByDescending(x => x.CreatedDate).ProjectTo<PostDto>(_mapper.ConfigurationProvider).Where(x => x.PostStatus == PostStatus.Publish)
-                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            var pagedData =
+            await _context.Posts.Where(x => x.PostStatus == PostStatus.Publish).OrderByDescending(x => x.CreatedDate).Include(x => x.PostCategories)
+                .ThenInclude(x => x.Category).Include(x => x.PostTags).ThenInclude(x => x.Tag).Select(x => new
+                {
+                    id = x.Id,
+                    name = x.Name,
+                    content = x.Content,
+                    Categories = x.PostCategories.Select(k => k.Category.Name),
+                    Tags = x.PostTags.Select(k => k.Tag.Name),
+                    UserName = x.AppUser.UserName,
+                    profileImg = x.AppUser.ProfileImg,
+                    createdDate = x.CreatedDate,
+                    canAccess = (x.AppUser.UserName == User.Identity.Name || User.IsInRole("Admin"))
+                }).Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
                 .ToListAsync();
+            // await _context.Posts.OrderByDescending(x => x.CreatedDate).ProjectTo<PostDto>(_mapper.ConfigurationProvider).Where(x => x.PostStatus == PostStatus.Publish)
+            //     .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            //     .Take(validFilter.PageSize)
+            //     .ToListAsync();
             var totalRecords = _context.Posts.Where(x => x.PostStatus == PostStatus.Publish).Count();
-            var pagedReponse = PaginationHelper.CreatePagedReponse<PostDto>(pagedData, validFilter, totalRecords, _uriService, route);
+            var pagedReponse = PaginationHelper.CreatePagedReponse(pagedData, validFilter, totalRecords, _uriService, route);
             return Ok(pagedReponse);
 
             // var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
@@ -94,7 +133,20 @@ namespace NewsWebApp.Controllers.Api
         [HttpGet("recommendations")]
         public IActionResult GetRecomendations([FromQuery] List<int> id)
         {
-            var posts = _repository.All().Where(x => id.Contains(x.Id)).Take(3).ToList();
+            var posts =
+            _context.Posts.Where(x => x.PostStatus == PostStatus.Publish && id.Contains(x.Id)).OrderByDescending(x => x.CreatedDate).Include(x => x.PostCategories)
+                .ThenInclude(x => x.Category).Include(x => x.PostTags).ThenInclude(x => x.Tag).Select(x => new
+                {
+                    id = x.Id,
+                    name = x.Name,
+                    slug = x.Slug,
+                    content = x.Content,
+                    category = x.PostCategories.Select(k => k.Category.Name).FirstOrDefault(),
+                    picture = x.Picture,
+                    Tag = x.PostTags.Select(k => k.Tag.Name).FirstOrDefault(),
+                    CreatedDate = x.CreatedDate
+                }).Take(3).ToList();
+            //  _repository.All().Where(x => id.Contains(x.Id)).Take(3).ToList();
 
             return Ok(posts);
         }

@@ -16,7 +16,9 @@ namespace NewsWebApp.Dtos
         public PostStatus PostStatus { get; set; }
         public ICollection<CategoryDto> Categories { get; set; }
         public ICollection<TagDto> Tags { get; set; }
+
         public virtual ICollection<PostTagDto> PostTags { get; set; }
+        public virtual TagDto Tag { get; set; }
         public virtual ICollection<PostCategoryDto> PostCategories { get; set; }
         public DateTime CreatedDate { get; set; }
         public ICollection<CommentDto> Comments { get; set; }

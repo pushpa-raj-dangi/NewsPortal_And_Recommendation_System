@@ -1,4 +1,5 @@
 
+
 from .models import Movie
 from sklearn.metrics.pairwise import cosine_similarity
 import requests
@@ -8,8 +9,8 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def combined_feature(row):
+    return row['tag'] + " " + row['category'] + " " + row['name']
 
-    return row['name']+row['content']
 
 
 def get_id_from_index(df, index):
@@ -25,19 +26,11 @@ def get_index_from_id(df, id):
 
 
 def get_recommendation_for_news(news_id):
+    print(f"&&&&&&&&&&&&&&&&&&&&&&&0930039330303 __________________ {news_id}")
     response = requests.get('https://localhost:5001/api/posts', verify=False)
     posts = response.json()
-    # normalize_data = pd.json_normalize(posts,max_level=1)
-
-    # print(posts)
-    # print("######################################################")
-
-
-
-    # print(posts,"\n\n\ndijfffffffffffffffffffff*******************************************")
-
     df = pd.DataFrame(posts)
-    features = ['name', 'content']
+    features = ['name','tag','category']
     for feature in features:
         df[feature] = df[feature].fillna('')
 
@@ -54,7 +47,7 @@ def get_recommendation_for_news(news_id):
     print(sorted_similar_news)
     i = 0
     news_ids = []
-    for news in sorted_similar_news:
+    for news in sorted_similar_news[1:]:
         i = i+1
         news_ids.append(get_id_from_index(df, news[0]))
 

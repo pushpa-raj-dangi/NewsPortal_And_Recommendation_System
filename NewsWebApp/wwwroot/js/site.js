@@ -219,24 +219,21 @@ $(document).ready(function () {
                 <tr style='height:85px'>
                   <td class='action-table'>
                     ${val.name}
-                       <span class='action-link'>
-                 <span class="text-danger dbtn" data-id="${
-                   val.id
-                 }"> Delete </span>|
-                                            <a href="/posts/edit/${
-                                              val.id
-                                            }">Edit</a> |
-                                            <a href="/posts/news/${
-                                              val.slug
-                                            }">View</a>
-                        </span>
+                    ${
+                      val.canAccess
+                        ? ` <span class='action-link'  >
+                 <span class="text-danger dbtn" data-id="${val.id}"> Delete </span>|
+                                            <a href="/posts/edit/${val.id}">Edit</a> |
+                                            <a href="/posts/news/${val.slug}">View</a>
+                        </span>`
+                        : ""
+                    }
+                      
                   </td>
-                  <td>${val.postCategories
-                    .map((cat) => cat.category.name)
-                    .join(",")}</td>
-                  <td>${val.postTags.map((cat) => cat.tag.name).join(",")}</td>
+                  <td>${val.categories.map((cat) => cat).join(",")}</td>
+                  <td>${val.tags.map((cat) => cat).join(",")}</td>
                    <td>
-                   ${new Date(val.createdDate)}
+                   ${new Date(val.createdDate).toLocaleDateString()}
                   </td>
                   <td class='d-flex'><img width="25px" height="25px" class="rounded-circle mx-2" src="/uploads/${
                     val.picture !== null ? val.profileImg : "default.jpg"

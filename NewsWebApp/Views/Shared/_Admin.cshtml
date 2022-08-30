@@ -75,11 +75,16 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/posts">Published Posts</a>
                         <a class="collapse-item" href="/posts/create">Add News</a>
+                          @if (User.IsInRole("Admin")){
+                        
                         <a class="collapse-item" href="/posts/draft">Drafts   <span class="badge badge-danger badge-counter draft-num"></span></a>
                         <a class="collapse-item" href="/posts/trash">Trash   <span class="badge badge-danger badge-counter trash"></span></a>
+                          }
                     </div>
                 </div>
             </div>
+             @if (User.IsInRole("Admin")){
+
 
             <div class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#cat"
@@ -94,7 +99,9 @@
                     </div>
                 </div>
             </div>
-
+            }
+ @if (User.IsInRole("Admin"))
+            {
             <div class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tag"
                    aria-expanded="true" aria-controls="collapseTwo">
@@ -108,6 +115,7 @@
                     </div>
                 </div>
             </div>
+            }
             @if (User.IsInRole("Admin"))
             {
         <div class="nav-item">

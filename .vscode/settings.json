@@ -1,0 +1,11 @@
+{
+  "editor.codeLensFontFamily": "Fira Code",
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.columnSelection": false,
+  "editor.fontFamily": "Fira Code",
+  "editor.emptySelectionClipboard": true,
+  "scm.inputFontFamily": "Fira Code",
+  "debug.console.fontFamily": "Fira Code",
+  "editor.inlayHints.fontFamily": "Fira Code",
+  "editor.fontWeight": "normal"
+}

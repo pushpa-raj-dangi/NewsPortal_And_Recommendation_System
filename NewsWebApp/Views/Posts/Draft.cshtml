@@ -13,7 +13,7 @@
                 @*<div class="col-md-4 offset-8">
                     <input id="input" class="form-control my-3" type="text" placeholder="Search Post...">
                     </div>*@
-                <table class="table table-borderd pt" id="postTable">
+                <table class="table table-borderd pt w-100" id="postTable">
                     <thead>
                         <tr class="table-active">
                             <th>
@@ -40,7 +40,7 @@
                                     @if (User.Identity.IsAuthenticated && post.AppUser.UserName == User.Identity.Name)
                                     {
                                         <span class="action-link">
-                                            <a class="dbtn text-danger" data-id="@post.Id"> Delete </a>|
+                                            <a class="dbtn text-danger" href="/posts/delete/@post.Id"> Delete </a>|
 
                                             <a href="/posts/edit/@post.Id">Edit</a> |
                                             <a href="/posts/news/@post.Slug">View</a>
